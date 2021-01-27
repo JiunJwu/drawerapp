@@ -12,4 +12,13 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="textview">test</string>
     <string name="textview2">test2</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">signin</string>
+    <string name="action_login">LOGIN</string>
+    <string name="signup">SIGNUP</string>
+    <string name="email">Email</string>
+    <string name="fullname">Fullname</string>
+    <string name="loginhere">Already have an account? Login</string>
+    <string name="signhere">Create a new account?SingUP</string>
 </resources>

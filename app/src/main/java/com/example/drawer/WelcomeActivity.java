@@ -5,35 +5,40 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import  android.widget.ImageView;
+import android.app.Activity;
 
 import androidx.annotation.Nullable;
+import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class WelcomeActivity extends AppCompatActivity implements Animation.AnimationListener {
+public class WelcomeActivity extends Activity {
+    // Splash screen timer
+    private static int SPLASH_TIME_OUT = 2000; //開啟畫面時間(2秒)
+
     private ImageView imageView;
     private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    setContentView(R.layout.welcome);
-    imageView=findViewById(R.id.imageView);
+        setContentView(R.layout.welcome);
+        new Handler().postDelayed(new Runnable() {
 
-    //imageView 設定動畫元件(透明度調整)
-    Animation animation = AnimationUtils.loadAnimation(this,R.anim.welcome);
-    animation.setFillEnabled(true);
-    animation.setAnimationListener(this);
-    imageView.setAnimation(animation);
+            /*
+             * Showing splash screen with a timer. This will be useful when you
+             * want to show case your app logo / company
+             */
+
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                // Start your app main activity
+                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class); //MainActivity為主要檔案名稱
+                WelcomeActivity.this.startActivity(intent);
+
+                // close this activity
+                WelcomeActivity.this.finish();
+            }
+        }, SPLASH_TIME_OUT);
     }
-    @Override
-    public void onAnimationStart(Animation animation){}
-
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
-        WelcomeActivity.this.finish();
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) { }
 }
