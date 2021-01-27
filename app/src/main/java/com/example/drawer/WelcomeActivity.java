@@ -33,7 +33,7 @@ public class WelcomeActivity extends Activity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class); //MainActivity為主要檔案名稱
+                Intent intent = new Intent(WelcomeActivity.this, Login.class); //MainActivity為主要檔案名稱
                 WelcomeActivity.this.startActivity(intent);
 
                 // close this activity
