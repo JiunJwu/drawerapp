@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Login extends AppCompatActivity {
 
     TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
@@ -59,15 +62,29 @@ public class Login extends AppCompatActivity {
                            String[] data = new String[2];
                            data[0] = username;
                            data[1] = password;
+                           String usname=new String();
+                           String usemail=new String();
+                           String loginState=new String();
                            PutData putData = new PutData("http://192.168.1.101/LoginRegister/login.php", "POST", field, data);
 
                            if (putData.startPut()) {
                                if (putData.onComplete()) {
                                    progressBar.setVisibility(View.GONE);
                                    String result = putData.getResult();
-                                   if (result.equals("Login Success")) {
-                                       Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                   try{
+                                       JSONObject jsonObject = new JSONObject(result);
+                                       usname = jsonObject.getString("fullname");
+                                       usemail = jsonObject.getString("email");
+                                       loginState=jsonObject.getString("Loginstate");
+                                   }
+                                   catch(JSONException e) {
+                                       e.printStackTrace();
+                                   }
+                                   if (loginState.equals("Login Success")) {
+                                       Toast.makeText(getApplicationContext(), loginState, Toast.LENGTH_SHORT).show();
                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                       User user =new User(usname,usemail);
+                                       intent.putExtra("user",user);
                                        startActivity(intent);
                                        finish();
                                    } else {

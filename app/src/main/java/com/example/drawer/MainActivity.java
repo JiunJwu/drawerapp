@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.navigation.ActivityNavigator;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -46,6 +48,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        View header=navigationView.getHeaderView(0);
+        TextView textView =header.findViewById(R.id.username);
+
+        if (getIntent().getSerializableExtra("user") != null) {
+            User userdata = (User) getIntent().getSerializableExtra("user");
+            textView.setText(userdata.getUserName());
+
+        } else {
+            User userdata = new User("rr1","rrr");
+            textView.setText(userdata.getUserName());
+        }
+
+
     }
 
     @Override
