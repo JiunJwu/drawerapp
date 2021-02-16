@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="6dp"
     android:layout_margin="12dp"
@@ -10,49 +10,55 @@
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="6dp">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="12dp"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="12dp"
+            android:layout_gravity="right"
+            android:layout_margin="0dp"
             android:orientation="horizontal">
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="294dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="12dp"
-                android:orientation="horizontal">
+                android:layout_margin="0dp"
+                android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/tvsubId"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:text="@string/textview" />
+
                 <TextView
                     android:id="@+id/tvId"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:text="@string/textview" />
+
                 <TextView
                     android:id="@+id/detail"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:text="@string/textview" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/detailbtn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="12dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="@string/detail" />
         </LinearLayout>
         <View
             android:id="@+id/divider2"
@@ -62,7 +68,7 @@
             android:background="?android:attr/listDivider" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="12dp"
@@ -70,10 +76,10 @@
 
             <TextView
                 android:id="@+id/tvCopy"
-                android:layout_width="match_parent"
+                android:layout_width="87dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
-                android:text="@string/textview" />
+                android:text="@string/copylink" />
 
             <View
                 android:id="@+id/divider"
@@ -84,27 +90,28 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
-                android:id="@+id/tvName"
-                android:layout_width="match_parent"
+                android:id="@+id/tvcopysl"
+                android:layout_width="109dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
-                android:text="@string/textview2" />
+                android:text="@string/copy_su_link" />
 
             <View
                 android:id="@+id/divider3"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
+                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:background="?android:attr/listDivider" />
 
 
             <TextView
                 android:id="@+id/tvShare"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/tvshare" />
         </LinearLayout>
 
 

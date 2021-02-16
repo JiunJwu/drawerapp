@@ -1,15 +1,21 @@
 package com.example.drawer;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.ActivityNavigator;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -49,15 +55,33 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         View header=navigationView.getHeaderView(0);
-        TextView textView =header.findViewById(R.id.username);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                menuItem.setChecked(true);
+                drawer.closeDrawers();
+                switch (menuItem.getItemId()){
+                    case R.id.nav_contact:
+                        mailToDeveloper();
+                        return true;
+                    case R.id.nav_logout:
+                        Toast.makeText(getApplicationContext(), "nav_logout", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return true;
+            }
+        });
+        TextView usname =header.findViewById(R.id.username);
+        TextView usemail =header.findViewById(R.id.userEmail);
 
         if (getIntent().getSerializableExtra("user") != null) {
             User userdata = (User) getIntent().getSerializableExtra("user");
-            textView.setText(userdata.getUserName());
+            usname.setText(userdata.getUserName());
+            usemail.setText(userdata.getUserEmail());
 
         } else {
             User userdata = new User("rr1","rrr");
-            textView.setText(userdata.getUserName());
+            usname.setText(userdata.getUserName());
         }
 
 
@@ -76,4 +100,16 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    private void mailToDeveloper() {
+          try {
+                Uri uri = Uri.parse("mailto:tchloie@gmail.com");
+                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                String subject = getString(R.string.app_name) + " (" + pInfo.versionName + ")";
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                startActivity(intent);
+              } catch (Exception e) {
+               Toast.makeText(this, R.string.mailfail, Toast.LENGTH_SHORT).show();
+              }
+        }
 }
