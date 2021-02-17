@@ -38,18 +38,26 @@
                     android:text="@string/textview" />
 
                 <TextView
-                    android:id="@+id/tvId"
+                    android:id="@+id/tvType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:text="@string/textview" />
 
                 <TextView
-                    android:id="@+id/detail"
+                    android:id="@+id/tvTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:text="@string/textview" />
+
+                <TextView
+                    android:id="@+id/textNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#3F51B5"
+                    android:text="TextView" />
+
             </LinearLayout>
 
             <Button

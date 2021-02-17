@@ -65,7 +65,7 @@ public class Login extends AppCompatActivity {
                            String usname=new String();
                            String usemail=new String();
                            String loginState=new String();
-                           PutData putData = new PutData("http://192.168.0.104/LoginRegister/login.php", "POST", field, data);
+                           PutData putData = new PutData("http://192.168.1.100/LoginRegister/login.php", "POST", field, data);
 
                            if (putData.startPut()) {
                                if (putData.onComplete()) {

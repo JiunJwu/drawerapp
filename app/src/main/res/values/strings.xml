@@ -118,5 +118,7 @@
     <string name="copylink">Copy link</string>
     <string name="copy_su_link">Copy single-use link</string>
     <string name="tvshare">share</string>
+    <string name="text_NoDataFound">no data found</string>
+    <string name="action_plus">+</string>
 
 </resources>

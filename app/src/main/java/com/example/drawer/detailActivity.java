@@ -106,8 +106,8 @@ public class detailActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(detailActivity.ListAdapter.MyViewHolder viewHolder, int position) {
             final detail_setting detail_setting = detailList.get(position);
-            viewHolder.tvsubId.setText(String.valueOf(detail_setting.getId()));
-            viewHolder.tvsubId2.setText(detail_setting.getName());
+            viewHolder.tvsubId.setText(String.valueOf(detail_setting.getName()));
+
             try {
                 for (int i =0 ;i<viewHolder.seclist.size(); i++){
                     if (i < detail_setting.getRaw()){
@@ -127,6 +127,27 @@ public class detailActivity extends AppCompatActivity {
                 if(!detail_setting.getSec3goto()){viewHolder.bnt4.setVisibility(View.GONE);}
             }catch (Exception e){
                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+            Intent intent = getIntent();
+            termin termin=new termin();
+            Bundle bag = intent.getExtras();
+            termin.setName(intent.getBundleExtra("termin").getString("name"));
+            termin.setType(intent.getBundleExtra("termin").getString("type"));
+            termin.setTime(intent.getBundleExtra("termin").getString("time"));
+            termin.setNote(intent.getBundleExtra("termin").getString("note"));
+            switch(position){
+                case 0:
+                    viewHolder.tvsubId2.setText(termin.getName());
+                    break;
+                case 1:
+                    viewHolder.tvsubId2.setText(termin.getType());
+                    break;
+                case 2:
+                    viewHolder.tvsubId2.setText(termin.getTime());
+                    break;
+                case 3:
+                    viewHolder.tvsubId2.setText(termin.getNote());
+                    break;
             }
         }
     }
