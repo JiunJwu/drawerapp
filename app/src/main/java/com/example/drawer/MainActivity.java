@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         TextView usname =header.findViewById(R.id.username);
         TextView usemail =header.findViewById(R.id.userEmail);
 
@@ -85,13 +86,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override

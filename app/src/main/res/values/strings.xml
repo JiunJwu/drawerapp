@@ -120,5 +120,6 @@
     <string name="tvshare">share</string>
     <string name="text_NoDataFound">no data found</string>
     <string name="action_plus">+</string>
+    <string name="share">share</string>
 
 </resources>

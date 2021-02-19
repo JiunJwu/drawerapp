@@ -13,17 +13,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class detailActivity extends AppCompatActivity {
 
@@ -31,8 +37,21 @@ public class detailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(detailActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         setSupportActionBar(toolbar);
+
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
 
@@ -47,12 +66,42 @@ public class detailActivity extends AppCompatActivity {
             }
         });
 
+        View popview = getLayoutInflater().inflate(R.layout.popup_share,null);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                RecyclerView recyview_share = popview.findViewById(R.id.recyview_share);
+                recyview_share.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+                List<Share>shareList=getShareList();
+                recyview_share.setAdapter(new detailActivity.ShareAdapter(shareList));
+                View view= findViewById(R.id.recyclerView_detail);
+                popupWin = new PopupWindow(view,
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+                popupWin.setContentView(popview);
+                popupWin.showAtLocation(view, Gravity.BOTTOM, 0, 10);
+                return true;
+            }
+        });
         final RecyclerView recyclerView = findViewById(R.id.recyclerView_detail);
         recyclerView.setLayoutManager(
                 new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         List<detail_setting> detaillist = getdetailList();
         recyclerView.setAdapter(new detailActivity.ListAdapter(this, detaillist));
 
+        Button btnback =  popview.findViewById(R.id.btn_shareback);
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                if (popupWin != null && popupWin.isShowing()) {
+                    popupWin.dismiss(); } }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
     private class ListAdapter extends RecyclerView.Adapter<detailActivity.ListAdapter.MyViewHolder> {
@@ -152,6 +201,73 @@ public class detailActivity extends AppCompatActivity {
         }
     }
 
+    private class ShareAdapter extends RecyclerView.Adapter<detailActivity.ShareAdapter.popViewHolder> {
+
+        private List<Share> shareList;
+
+        ShareAdapter(List<Share> getschareList) {
+            this.shareList = getschareList;
+        }
+
+        class popViewHolder extends RecyclerView.ViewHolder {
+            ImageView imageView;
+            TextView shareway;
+
+            popViewHolder(View itemView) {
+                super(itemView);
+                imageView = itemView.findViewById(R.id.ivImage);
+                shareway = itemView.findViewById(R.id.share_action);
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return shareList.size();
+        }
+
+        @Override
+        public popViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            LayoutInflater layoutInflater = getLayoutInflater();
+            View item = layoutInflater.inflate(R.layout.share_option, viewGroup, false);
+            return new detailActivity.ShareAdapter.popViewHolder(item);
+        }
+
+        @Override
+        public void onBindViewHolder(popViewHolder viewHolder, int position) {
+            final Share share_setting = shareList.get(position);
+            viewHolder.shareway.setText(share_setting.getName());
+            switch(share_setting.getImage()){
+                case 0:
+                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_email_40);
+                    break;
+                case 1:
+                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_textsms_40);
+                    break;
+                case 2:
+                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_insert_link_40);
+                    break;
+                case 3:
+                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_more_40);
+                    break;
+            }
+
+            viewHolder.itemView.setOnClickListener(v -> {
+                switch (position){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+
+            });
+
+        }
+    }
+
     public List<detail_setting> getdetailList() {
         List<detail_setting> detailList = new ArrayList<>();
         detailList.add(new detail_setting(1, false, true, true, "Name and duration",3));
@@ -161,4 +277,13 @@ public class detailActivity extends AppCompatActivity {
         return detailList;
     }
 
+    public List<Share> getShareList() {
+        List<Share> shareList = new ArrayList<>();
+        shareList.add(new Share(1,0,"Send Email"));
+        shareList.add(new Share(2, 1,"Send Text"));
+        shareList.add(new Share(3,2,"Copy Link"));
+        shareList.add(new Share(4, 3,"More Options"));
+        return shareList;
+    }
+    PopupWindow popupWin;
 }
