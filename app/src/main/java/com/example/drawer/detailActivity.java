@@ -66,20 +66,15 @@ public class detailActivity extends AppCompatActivity {
             }
         });
 
-        View popview = getLayoutInflater().inflate(R.layout.popup_share,null);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                RecyclerView recyview_share = popview.findViewById(R.id.recyview_share);
-                recyview_share.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-                List<Share>shareList=getShareList();
-                recyview_share.setAdapter(new detailActivity.ShareAdapter(shareList));
-                View view= findViewById(R.id.recyclerView_detail);
-                popupWin = new PopupWindow(view,
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
-                popupWin.setContentView(popview);
-                popupWin.showAtLocation(view, Gravity.BOTTOM, 0, 10);
+                PopWinShare popWinShare = new PopWinShare(detailActivity.this);
+                //popWinShare.showAsDropDown(toolbar);
+                //popWinShare.showAtLocation(getWindow().getDecorView(),Gravity.CENTER,0,0);
+                popWinShare.showAtLocation(detailActivity.this.findViewById(R.id.recyclerView_detail),
+                        Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 return true;
             }
         });
@@ -89,12 +84,6 @@ public class detailActivity extends AppCompatActivity {
         List<detail_setting> detaillist = getdetailList();
         recyclerView.setAdapter(new detailActivity.ListAdapter(this, detaillist));
 
-        Button btnback =  popview.findViewById(R.id.btn_shareback);
-        btnback.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                if (popupWin != null && popupWin.isShowing()) {
-                    popupWin.dismiss(); } }
-        });
     }
 
     @Override
@@ -201,73 +190,6 @@ public class detailActivity extends AppCompatActivity {
         }
     }
 
-    private class ShareAdapter extends RecyclerView.Adapter<detailActivity.ShareAdapter.popViewHolder> {
-
-        private List<Share> shareList;
-
-        ShareAdapter(List<Share> getschareList) {
-            this.shareList = getschareList;
-        }
-
-        class popViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
-            TextView shareway;
-
-            popViewHolder(View itemView) {
-                super(itemView);
-                imageView = itemView.findViewById(R.id.ivImage);
-                shareway = itemView.findViewById(R.id.share_action);
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return shareList.size();
-        }
-
-        @Override
-        public popViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            LayoutInflater layoutInflater = getLayoutInflater();
-            View item = layoutInflater.inflate(R.layout.share_option, viewGroup, false);
-            return new detailActivity.ShareAdapter.popViewHolder(item);
-        }
-
-        @Override
-        public void onBindViewHolder(popViewHolder viewHolder, int position) {
-            final Share share_setting = shareList.get(position);
-            viewHolder.shareway.setText(share_setting.getName());
-            switch(share_setting.getImage()){
-                case 0:
-                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_email_40);
-                    break;
-                case 1:
-                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_textsms_40);
-                    break;
-                case 2:
-                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_insert_link_40);
-                    break;
-                case 3:
-                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_more_40);
-                    break;
-            }
-
-            viewHolder.itemView.setOnClickListener(v -> {
-                switch (position){
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                }
-
-            });
-
-        }
-    }
-
     public List<detail_setting> getdetailList() {
         List<detail_setting> detailList = new ArrayList<>();
         detailList.add(new detail_setting(1, false, true, true, "Name and duration",3));
@@ -277,13 +199,4 @@ public class detailActivity extends AppCompatActivity {
         return detailList;
     }
 
-    public List<Share> getShareList() {
-        List<Share> shareList = new ArrayList<>();
-        shareList.add(new Share(1,0,"Send Email"));
-        shareList.add(new Share(2, 1,"Send Text"));
-        shareList.add(new Share(3,2,"Copy Link"));
-        shareList.add(new Share(4, 3,"More Options"));
-        return shareList;
-    }
-    PopupWindow popupWin;
 }

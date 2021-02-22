@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PopupWindow視窗淡入淡出動畫 -->
+    <style name="AnimationFade">
+        <!-- Activity背景 --> <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/entry</item>        <!-- 指定顯示的動畫xml  -->
+        <item name="android:windowExitAnimation">@anim/exit</item>       <!-- 指定消失的動畫xml  -->
+        <!-- 背景模糊 --> <!--<item>true</item>-->
+    </style>
+    <style name="mypopwindow_anim_style">
+
+        <item name="android:windowEnterAnimation">@anim/entry</item>        <!-- 指定顯示的動畫xml  -->
+
+        <item name="android:windowExitAnimation">@anim/exit</item>       <!-- 指定消失的動畫xml  -->
+
+    </style>
+</resources>
